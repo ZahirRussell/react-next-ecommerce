@@ -24,7 +24,7 @@ const MyOrder = () => {
         <Box m={2} pt={3}>
           <Meta title="My Order Page" description="Order List" />
           <Container maxWidth="md">
-            <div className="profile_page">
+            <div>
                 <section className="row text-secondary my-3">              
                 <TableContainer component={Paper}>
                 <Table aria-label="simple table">

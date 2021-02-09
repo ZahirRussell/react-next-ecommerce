@@ -1,4 +1,4 @@
-const baseUrl = process.env.BASE_URL
+import baseUrl from './baseUrl.jsx'
 
 export const getData = async (url) => {
     const res = await fetch(`${baseUrl}/api/${url}`, {
