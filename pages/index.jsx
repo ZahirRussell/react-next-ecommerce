@@ -52,8 +52,19 @@ const Home = ({products}) => {
   )
 }
 
+// // Here we use getStaticProps, beacause this page is not not user-specific.
+// export async function getStaticProps() {
+//   const res = await getData('product')
+//   return {
+//     props: {
+//       products: res.products,
+//       notFound: true
+//     }, 
+//   }
+// }
+
 // Here we use getStaticProps, beacause this page is not not user-specific.
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await getData('product')
   return {
     props: {
