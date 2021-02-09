@@ -1,0 +1,57 @@
+import connectDB from '../../../utils/connectDB'
+import Orders from '../../../models/orderModel'
+import Products from '../../../models/productModel'
+
+connectDB()
+
+export default async (req, res) => {
+    switch(req.method){
+        case "POST":
+            await createOrder(req, res)
+            break;
+        case "GET":
+            await getOrders(req, res)
+            break;
+    }
+}
+
+const getOrders = async (req, res) => {
+    try {
+        let orders = await Orders.find();  
+
+        res.json({orders})
+    } catch (err) {
+        return res.status(500).json({err: err.message})
+    }
+}
+
+const createOrder = async (req, res) => {
+    try {
+        const { name, address, mobile, cart, total } = req.body
+
+        const newOrder = new Orders({
+           name, address, mobile, cart, total
+        })
+
+        cart.filter(item => {
+            return sold(item._id, item.quantity, item.inStock, item.sold)
+        })
+
+        await newOrder.save()
+
+        res.json({
+            msg: 'Order success!',
+            newOrder
+        })
+
+    } catch (err) {
+        return res.status(500).json({err: err.message})
+    }
+}
+
+const sold = async (id, quantity, oldInStock, oldSold) => {
+    await Products.findOneAndUpdate({_id: id}, {
+        inStock: oldInStock - quantity,
+        sold: quantity + oldSold
+    })
+}
